@@ -1,4 +1,12 @@
-# artwork-neato
+# Artwork Generation
+
+This is a project about generating artwork and learning about Vue 3. Separated sections for each type of artwork with Vue managing the UI around each of the designs.
+
+Uses:
+
+- Vue 3
+- p5.js
+
 
 ## Project setup
 ```
@@ -19,6 +27,3 @@ npm run build
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
