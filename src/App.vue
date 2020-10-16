@@ -1,5 +1,9 @@
 <template>
-	<CanvasOne />
+	<div class="app">
+		<div class="canvas-board">
+			<canvas-one />
+		</div>
+	</div>
 </template>
 
 <script>
@@ -14,5 +18,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+.canvas-board {
+	@apply flex flex-wrap justify-around;
+}
 </style>

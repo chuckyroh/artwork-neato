@@ -1,27 +1,47 @@
 <template>
-	<div class="canvas-one">
-		<p>{{ user.name }}</p>
-		<div ref="sketchContainer"></div>
-	</div>
+	<canvas-container>
+		<template v-slot:info-bar>
+			<p class="text-gray-700 text-center">{{ user.name }}</p>
+		</template>
+		<template v-slot:default>
+			<div ref="sketchContainer"></div>
+		</template>
+	</canvas-container>
 </template>
 
 <script>
 import P5 from 'p5'
 import { ref, reactive, onMounted } from 'vue'
+import CanvasContainer from './CanvasContainer.vue'
 
 // sketch functions
 const sketch = p => {
-	const x = 100
-	const y = 100
+	const canvasHeight = 300
+	const canvasWidth = 300
+
+	var xpos = 0
+	var xspeed = 1
 
 	p.setup = () => {
-		p.createCanvas(700, 410)
+		p.createCanvas(canvasWidth, canvasHeight)
+		p.frameRate(30)
 	}
 
 	p.draw = () => {
-		p.background(0)
-		p.fill(255)
-		p.rect(x, y, 50, 50)
+		p.background(255)
+
+		for (var row = 0; row < canvasHeight / 10; row++) {
+			const y = (row * 10) + 5
+
+			for (var col = 0; col <= canvasWidth / 10; col++) {
+				const reverse = row % 2 === 0 ? -1 : 1
+				const x = (col * 10) + (xpos * reverse)
+				p.circle(x, y, 5)
+			}
+		}
+
+		xpos = xpos + xspeed
+		if (xpos === 10) xpos = 0
 	}
 }
 
@@ -29,6 +49,9 @@ export default {
 	name: 'CanvasOne',
 	props: {
 
+	},
+	components: {
+		CanvasContainer
 	},
 	setup (props, context) {
 		// user information
@@ -38,7 +61,7 @@ export default {
 
 		// p5 related
 		const sketchContainer = ref(null)
-		var sketcher = ref(null)
+		const sketcher = ref(null)
 		onMounted(() => {
 			sketcher.value = new P5(sketch, sketchContainer.value)
 		})
